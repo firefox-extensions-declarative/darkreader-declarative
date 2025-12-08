@@ -64,7 +64,8 @@
     "url": "https://opencollective.com/darkreader/donate"
   },
   "dependencies": {
-    "malevic": "0.20.2"
+    "malevic": "0.20.2",
+    "ts-json-schema-generator": "^2.4.0"
   },
   "devDependencies": {
     "@eslint/compat": "2.0.3",

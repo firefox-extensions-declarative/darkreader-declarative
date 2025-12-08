@@ -3,7 +3,7 @@ import {getDestDir, absolutePath} from './paths.js';
 import {PLATFORM} from './platform.js';
 import * as reload from './reload.js';
 import {createTask} from './task.js';
-import {readJSON, writeJSON} from './utils.js';
+import {readJSON, writeJSON, copyFile} from './utils.js';
 
 async function patchManifest(platform, debug, watch, test) {
     const manifest = await readJSON(absolutePath('src/manifest.json'));
@@ -42,6 +42,8 @@ async function manifests({platforms, debug, watch, test}) {
         const manifest = await patchManifest(platform, debug, watch, test);
         const destDir = getDestDir({debug, platform});
         await writeJSON(`${destDir}/manifest.json`, manifest);
+        await writeJSON(`${destDir}/manifest.json`, manifest);
+        await copyFile('src/managed_storage.json', `${destDir}/managed_storage.json`);
     }
 }
 

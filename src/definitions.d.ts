@@ -267,3 +267,6 @@ export interface News {
 
 // These values need to match those in Manifest
 export type Command = 'toggle' | 'addSite' | 'switchEngine';
+
+// for declarative setting type generation
+export type PartialUserSettings = Partial<UserSettings>;
