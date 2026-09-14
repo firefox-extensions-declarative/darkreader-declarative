@@ -8,6 +8,7 @@ import {validateSettings} from '../utils/validation';
 
 import {readSyncStorage, readLocalStorage, writeSyncStorage, writeLocalStorage, removeSyncStorage, removeLocalStorage} from './utils/extension-api';
 import {logWarn} from './utils/log';
+import {isFirefox} from 'utils/platform';
 
 
 const SAVE_TIMEOUT = 1000;
@@ -129,11 +130,26 @@ export default class UserStorage {
             UserStorage.migrateAutomationSettings(local);
             UserStorage.migrateBuiltInSVGFilterToCSSFilter(local);
             UserStorage.fillDefaults(local);
+            // @ts-expect-error chrome.storage.managed does not seem to work in firefox
+            if (isFirefox && typeof(browser.storage.managed) === 'object') {
+                try {
+                // @ts-expect-error chrome.storage.managed does not seem to work in firefox
+                    const managedSettings = await browser.storage.managed.get(null);
+                    if (managedSettings) {
+                        local = {
+                            ...local,
+                            ...managedSettings,
+                        } as UserSettings;
+                    }
+                } catch (err) {
+                    console.error(`page.initSettings: ${err}`);
+                }
+            }
             UserStorage.loadBarrier.resolve(local);
             return local;
         }
 
-        const $sync = await readSyncStorage(DEFAULT_SETTINGS);
+        let $sync = await readSyncStorage(DEFAULT_SETTINGS);
         if (!$sync) {
             logWarn('Sync settings are missing');
             local.syncSettings = false;
@@ -141,6 +157,22 @@ export default class UserStorage {
             UserStorage.saveSyncSetting(false);
             UserStorage.loadBarrier.resolve(local);
             return local;
+        }
+
+        // @ts-expect-error chrome.storage.managed does not seem to work in firefox
+        if (isFirefox && typeof(browser.storage.managed) === 'object') {
+            try {
+                // @ts-expect-error chrome.storage.managed does not seem to work in firefox
+                const managedSettings = await browser.storage.managed.get(null);
+                if (managedSettings) {
+                    $sync = {
+                        ...$sync,
+                        ...managedSettings,
+                    } as UserSettings;
+                }
+            } catch (err) {
+                console.error(`page.initSettings: ${err}`);
+            }
         }
 
         const {errors: syncCfgErrors} = validateSettings($sync);
