@@ -73,7 +73,8 @@
     "unrs-resolver": true
   },
   "dependencies": {
-    "malevic": "0.20.3"
+    "malevic": "0.20.3",
+    "ts-json-schema-generator": "^2.4.0"
   },
   "devDependencies": {
     "@eslint/compat": "2.1.1",

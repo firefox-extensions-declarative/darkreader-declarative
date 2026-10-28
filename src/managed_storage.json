@@ -1,0 +1,312 @@
+{
+  "$ref": "#/definitions/PartialUserSettings",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "Automation": {
+      "additionalProperties": false,
+      "properties": {
+        "behavior": {
+          "enum": [
+            "OnOff",
+            "Scheme"
+          ],
+          "type": "string"
+        },
+        "enabled": {
+          "type": "boolean"
+        },
+        "mode": {
+          "$ref": "#/definitions/AutomationMode"
+        }
+      },
+      "required": [
+        "enabled",
+        "mode",
+        "behavior"
+      ],
+      "type": "object"
+    },
+    "AutomationMode": {
+      "enum": [
+        "",
+        "time",
+        "system",
+        "location"
+      ],
+      "type": "string"
+    },
+    "CustomSiteConfig": {
+      "additionalProperties": false,
+      "properties": {
+        "builtIn": {
+          "type": "boolean"
+        },
+        "theme": {
+          "$ref": "#/definitions/Theme"
+        },
+        "url": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "url",
+        "theme"
+      ],
+      "type": "object"
+    },
+    "FilterMode": {
+      "enum": [
+        0,
+        1
+      ],
+      "type": "number"
+    },
+    "LocationSettings": {
+      "additionalProperties": false,
+      "properties": {
+        "latitude": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "longitude": {
+          "type": [
+            "number",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "latitude",
+        "longitude"
+      ],
+      "type": "object"
+    },
+    "PartialUserSettings": {
+      "additionalProperties": false,
+      "properties": {
+        "automation": {
+          "$ref": "#/definitions/Automation"
+        },
+        "changeBrowserTheme": {
+          "type": "boolean"
+        },
+        "customThemes": {
+          "items": {
+            "$ref": "#/definitions/CustomSiteConfig"
+          },
+          "type": "array"
+        },
+        "detectDarkTheme": {
+          "type": "boolean"
+        },
+        "disabledFor": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "enableContextMenus": {
+          "type": "boolean"
+        },
+        "enableForPDF": {
+          "type": "boolean"
+        },
+        "enableForProtectedPages": {
+          "type": "boolean"
+        },
+        "enabled": {
+          "type": "boolean"
+        },
+        "enabledByDefault": {
+          "type": "boolean"
+        },
+        "enabledFor": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "fetchNews": {
+          "type": "boolean"
+        },
+        "location": {
+          "$ref": "#/definitions/LocationSettings"
+        },
+        "presets": {
+          "items": {
+            "$ref": "#/definitions/ThemePreset"
+          },
+          "type": "array"
+        },
+        "previewNewDesign": {
+          "type": "boolean"
+        },
+        "previewNewestDesign": {
+          "type": "boolean"
+        },
+        "schemeVersion": {
+          "type": "number"
+        },
+        "syncSettings": {
+          "type": "boolean"
+        },
+        "syncSitesFixes": {
+          "type": "boolean"
+        },
+        "theme": {
+          "$ref": "#/definitions/Theme"
+        },
+        "time": {
+          "$ref": "#/definitions/TimeSettings"
+        }
+      },
+      "type": "object"
+    },
+    "Theme": {
+      "additionalProperties": false,
+      "properties": {
+        "brightness": {
+          "type": "number"
+        },
+        "contrast": {
+          "type": "number"
+        },
+        "darkColorScheme": {
+          "type": "string"
+        },
+        "darkSchemeBackgroundColor": {
+          "type": "string"
+        },
+        "darkSchemeTextColor": {
+          "type": "string"
+        },
+        "engine": {
+          "$ref": "#/definitions/ThemeEngine"
+        },
+        "fontFamily": {
+          "type": "string"
+        },
+        "grayscale": {
+          "type": "number"
+        },
+        "immediateModify": {
+          "type": "boolean"
+        },
+        "lightColorScheme": {
+          "type": "string"
+        },
+        "lightSchemeBackgroundColor": {
+          "type": "string"
+        },
+        "lightSchemeTextColor": {
+          "type": "string"
+        },
+        "mode": {
+          "$ref": "#/definitions/FilterMode"
+        },
+        "scrollbarColor": {
+          "type": "string"
+        },
+        "selectionColor": {
+          "type": "string"
+        },
+        "sepia": {
+          "type": "number"
+        },
+        "styleSystemControls": {
+          "type": "boolean"
+        },
+        "stylesheet": {
+          "type": "string"
+        },
+        "textStroke": {
+          "type": "number"
+        },
+        "useFont": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "mode",
+        "brightness",
+        "contrast",
+        "grayscale",
+        "sepia",
+        "useFont",
+        "fontFamily",
+        "textStroke",
+        "engine",
+        "stylesheet",
+        "darkSchemeBackgroundColor",
+        "darkSchemeTextColor",
+        "lightSchemeBackgroundColor",
+        "lightSchemeTextColor",
+        "scrollbarColor",
+        "selectionColor",
+        "styleSystemControls",
+        "lightColorScheme",
+        "darkColorScheme",
+        "immediateModify"
+      ],
+      "type": "object"
+    },
+    "ThemeEngine": {
+      "enum": [
+        "cssFilter",
+        "svgFilter",
+        "staticTheme",
+        "dynamicTheme"
+      ],
+      "type": "string"
+    },
+    "ThemePreset": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "theme": {
+          "$ref": "#/definitions/Theme"
+        },
+        "urls": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "urls",
+        "theme"
+      ],
+      "type": "object"
+    },
+    "TimeSettings": {
+      "additionalProperties": false,
+      "properties": {
+        "activation": {
+          "type": "string"
+        },
+        "deactivation": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "activation",
+        "deactivation"
+      ],
+      "type": "object"
+    }
+  }
+}
+
